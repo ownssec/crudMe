@@ -1,33 +1,43 @@
 <?php
-/** Simple data object for one student */
 class Student {
-    private string $name   = '';
-    private int    $age    = 0;
-    private string $gender = '';
-    private string $status = '';
+    private $name;
+    private $age;
+    private $gender;
+    private $status;
 
-    public function __construct(
-        string $name   = '',
-        int    $age    = 0,
-        string $gender = '',
-        string $status = ''
-    ) {
-        $this->name   = $name;
-        $this->age    = $age;
+    // Setters
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    public function setAge($age) {
+        $this->age = $age;
+    }
+
+    public function setGender($gender) {
         $this->gender = $gender;
+    }
+
+    public function setStatus($status) {
         $this->status = $status;
     }
 
-    /* getters */
-    public function getName()   : string { return $this->name;   }
-    public function getAge()    : int    { return $this->age;    }
-    public function getGender() : string { return $this->gender; }
-    public function getStatus() : string { return $this->status; }
+    // Getters
+    public function getName() {
+        return $this->name;
+    }
 
-    /* setters */
-    public function setName(string $v)   : void { $this->name   = $v; }
-    public function setAge(int $v)       : void { $this->age    = $v; }
-    public function setGender(string $v) : void { $this->gender = $v; }
-    public function setStatus(string $v) : void { $this->status = $v; }
+    public function getAge() {
+        return $this->age;
+    }
+
+    public function getGender() {
+        return $this->gender;
+    }
+
+    public function getStatus() {
+        return $this->status;
+    }
 }
+?>
 

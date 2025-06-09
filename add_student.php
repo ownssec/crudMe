@@ -6,12 +6,13 @@ require 'connection.php';  // $conn must be a valid MySQLi object
 require 'Student.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $student = new Student(
-        $_POST['student_name']   ?? '',
-        (int) ($_POST['student_age']  ?? 0),
-        $_POST['student_gender'] ?? '',
-        $_POST['student_status'] ?? ''
-    );
+    
+    $student = new Student();
+    $student->setName(trim($_POST['student_name'] ?? ''));
+    $student->setAge((int) ($_POST['student_age'] ?? 0));
+    $student->setGender(trim($_POST['student_gender'] ?? ''));
+    $student->setStatus(trim($_POST['student_status'] ?? ''));
+
 
     if (
         $student->getName()   === '' ||

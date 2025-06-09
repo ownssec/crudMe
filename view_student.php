@@ -34,7 +34,6 @@ $result = $conn->query("SELECT * FROM students_table ORDER BY student_id DESC");
     <div class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Student Registry System<small>Students</small></h1>
-            <a href="index.php" class="btn btn-secondary">Back</a>
         </div>
         <div class="table-responsive">
             <table class="table table-bordered table-hover shadow-sm">
@@ -59,6 +58,9 @@ $result = $conn->query("SELECT * FROM students_table ORDER BY student_id DESC");
                     <?php endwhile; ?>
                 </tbody>
             </table>
+            <div class="text-end">
+               <a href="index.php" class="btn btn-secondary">Back</a>
+            </div>
         </div>
     </div>
 </body>

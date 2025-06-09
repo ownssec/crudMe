@@ -3,22 +3,44 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require 'connection.php';
+require 'Student.php';
+
 $id  = $_GET['id'] ?? 0;
 $emp = $conn->query("SELECT * FROM students_table WHERE student_id=$id")->fetch_assoc();
+
 if (!$emp) {
-    die('Employee not found');
+    die('Student not found');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $student_name = $_POST['student_name']   ?? '';
-    $student_age = $_POST['student_age']  ?? '';
-    $student_gender = $_POST['student_gender'] ?? '';
-    $student_status = $_POST['student_status'] ?? '';
+    // Create Student object and set new values
+    $student = new Student();
+    $student->setName(trim($_POST['student_name'] ?? ''));
+    $student->setAge((int) ($_POST['student_age'] ?? 0));
+    $student->setGender(trim($_POST['student_gender'] ?? ''));
+    $student->setStatus(trim($_POST['student_status'] ?? ''));
 
-
+    // Prepare update statement
     $stmt = $conn->prepare("UPDATE students_table SET student_name=?, student_age=?, student_gender=?, student_status=? WHERE student_id=?");
-    $stmt->bind_param('sissi', $student_name, $student_age, $student_gender, $student_status, $id);
-    $stmt->execute();
+
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
+    // Bind parameters using getters from Student object
+    $stmt->bind_param(
+        'sissi',
+        $student->getName(),
+        $student->getAge(),
+        $student->getGender(),
+        $student->getStatus(),
+        $id
+    );
+
+    if (!$stmt->execute()) {
+        die("Execute failed: " . $stmt->error);
+    }
+
     header('Location: index.php');
     exit;
 }
